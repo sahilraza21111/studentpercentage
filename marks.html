@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Percentage & Grade Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        h1 {
+            color: #0072ff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 2px solid #0072ff;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00c6ff;
+        }
+
+        .btn-calculate, .btn-reset {
+            background-color: #0072ff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-calculate:hover, .btn-reset:hover {
+            background-color: #00c6ff;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .result span {
+            font-weight: bold;
+        }
+
+        .grade-A {
+            color: #28a745;
+        }
+
+        .grade-B {
+            color: #ffc107;
+        }
+
+        .grade-C {
+            color: #ff6347;
+        }
+
+        .grade-D {
+            color: #d9534f;
+        }
+
+        .grade-F {
+            color: #dc3545;
+        }
+
+        .grade-description {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+        @media (max-width: 600px) {
+            .calculator {
+                padding: 30px;
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculator">
+        <h1>Exam Percentage & Grade Calculator</h1>
+
+        
+        <div class="input-field">
+            <label for="obtainedMarks">Obtained Marks:</label>
+            <input type="number" id="obtainedMarks" placeholder="Enter obtained marks">
+        </div>
+
+        <div class="input-field">
+            <label for="totalMarks">Total Marks:</label>
+            <input type="number" id="totalMarks" placeholder="Enter total marks">
+        </div>
+
+        
+        <button class="btn-calculate" onclick="calculateGrade()">Calculate</button>
+        <button class="btn-reset" onclick="resetFields()">Reset</button>
+        <div class="result" id="result"></div>
+        <div class="grade-description" id="gradeDescription"></div>
+    </div>
+
+    <script>
+        function calculateGrade() {
+            
+            const obtainedMarks = parseFloat(document.getElementById('obtainedMarks').value);
+            const totalMarks = parseFloat(document.getElementById('totalMarks').value);
+
+            
+            if (isNaN(obtainedMarks) || isNaN(totalMarks) || obtainedMarks < 0 || totalMarks <= 0) {
+                alert("Please enter valid marks.");
+                return;
+            }
+
+            
+            const percentage = (obtainedMarks / totalMarks) * 100;
+            let grade = '';
+            let gradeClass = '';
+            let gradeDescription = '';
+
+            if (percentage >= 90) {
+                grade = 'A';
+                gradeClass = 'grade-A';
+                gradeDescription = 'Excellent!';
+            } else if (percentage >= 75) {
+                grade = 'B';
+                gradeClass = 'grade-B';
+                gradeDescription = 'Good!';
+            } else if (percentage >= 50) {
+                grade = 'C';
+                gradeClass = 'grade-C';
+                gradeDescription = 'Improvement.';
+            } else if (percentage >= 35) {
+                grade = 'D';
+                gradeClass = 'grade-D';
+                gradeDescription = 'Passed.';
+            } else {
+                grade = 'F';
+                gradeClass = 'grade-F';
+                gradeDescription = 'Failed. Try, Again!';
+            }
+
+            
+            const resultElement = document.getElementById('result');
+            const descriptionElement = document.getElementById('gradeDescription');
+            resultElement.innerHTML = `
+                Your Percentage: <span>${percentage.toFixed(2)}%</span><br>
+                Grade: <span class="${gradeClass}">${grade}</span>
+            `;
+            descriptionElement.innerHTML = gradeDescription;
+        }
+
+        function resetFields() {
+            document.getElementById('obtainedMarks').value = '';
+            document.getElementById('totalMarks').value = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('gradeDescription').innerHTML = '';
+        }
+    </script>
+
+</body>
+
+</html>
+
+   
